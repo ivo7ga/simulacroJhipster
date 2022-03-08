@@ -1,6 +1,9 @@
 package com.mycompany.myapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -30,6 +33,16 @@ public class Aeropuerto implements Serializable {
     @Size(min = 10, max = 255)
     @Column(name = "ciudad", length = 255, nullable = false)
     private String ciudad;
+
+    @OneToMany(mappedBy = "aeropuerto")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "aeropuerto", "destinoAeropuerto", "avion", "piloto", "tripulantes" }, allowSetters = true)
+    private Set<Vuelo> vuelos = new HashSet<>();
+
+    @OneToMany(mappedBy = "destinoAeropuerto")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "aeropuerto", "destinoAeropuerto", "avion", "piloto", "tripulantes" }, allowSetters = true)
+    private Set<Vuelo> vueloDestinos = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -70,6 +83,68 @@ public class Aeropuerto implements Serializable {
 
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
+    }
+
+    public Set<Vuelo> getVuelos() {
+        return this.vuelos;
+    }
+
+    public void setVuelos(Set<Vuelo> vuelos) {
+        if (this.vuelos != null) {
+            this.vuelos.forEach(i -> i.setAeropuerto(null));
+        }
+        if (vuelos != null) {
+            vuelos.forEach(i -> i.setAeropuerto(this));
+        }
+        this.vuelos = vuelos;
+    }
+
+    public Aeropuerto vuelos(Set<Vuelo> vuelos) {
+        this.setVuelos(vuelos);
+        return this;
+    }
+
+    public Aeropuerto addVuelo(Vuelo vuelo) {
+        this.vuelos.add(vuelo);
+        vuelo.setAeropuerto(this);
+        return this;
+    }
+
+    public Aeropuerto removeVuelo(Vuelo vuelo) {
+        this.vuelos.remove(vuelo);
+        vuelo.setAeropuerto(null);
+        return this;
+    }
+
+    public Set<Vuelo> getVueloDestinos() {
+        return this.vueloDestinos;
+    }
+
+    public void setVueloDestinos(Set<Vuelo> vuelos) {
+        if (this.vueloDestinos != null) {
+            this.vueloDestinos.forEach(i -> i.setDestinoAeropuerto(null));
+        }
+        if (vuelos != null) {
+            vuelos.forEach(i -> i.setDestinoAeropuerto(this));
+        }
+        this.vueloDestinos = vuelos;
+    }
+
+    public Aeropuerto vueloDestinos(Set<Vuelo> vuelos) {
+        this.setVueloDestinos(vuelos);
+        return this;
+    }
+
+    public Aeropuerto addVueloDestino(Vuelo vuelo) {
+        this.vueloDestinos.add(vuelo);
+        vuelo.setDestinoAeropuerto(this);
+        return this;
+    }
+
+    public Aeropuerto removeVueloDestino(Vuelo vuelo) {
+        this.vueloDestinos.remove(vuelo);
+        vuelo.setDestinoAeropuerto(null);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity Vuelo.
+    -->
+    <changeSet id="20220308113845-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="aeropuerto_id"
+                                 baseTableName="vuelo"
+                                 constraintName="fk_vuelo__aeropuerto_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="aeropuerto"/>
+
+        <addForeignKeyConstraint baseColumnNames="destino_aeropuerto_id"
+                                 baseTableName="vuelo"
+                                 constraintName="fk_vuelo__destino_aeropuerto_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="aeropuerto"/>
+
+        <addForeignKeyConstraint baseColumnNames="avion_id"
+                                 baseTableName="vuelo"
+                                 constraintName="fk_vuelo__avion_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="avion"/>
+
+        <addForeignKeyConstraint baseColumnNames="piloto_id"
+                                 baseTableName="vuelo"
+                                 constraintName="fk_vuelo__piloto_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="piloto"/>
+
+        <addForeignKeyConstraint baseColumnNames="vuelo_id"
+                                 baseTableName="rel_vuelo__tripulante"
+                                 constraintName="fk_rel_vuelo__tripulante__vuelo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="vuelo"/>
+
+        <addForeignKeyConstraint baseColumnNames="tripulante_id"
+                                 baseTableName="rel_vuelo__tripulante"
+                                 constraintName="fk_rel_vuelo__tripulante__tripulante_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tripulante"/>
+    </changeSet>
+</databaseChangeLog>

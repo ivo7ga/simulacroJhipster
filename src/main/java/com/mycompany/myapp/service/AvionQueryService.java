@@ -97,6 +97,12 @@ public class AvionQueryService extends QueryService<Avion> {
             if (criteria.getNumeroSerie() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getNumeroSerie(), Avion_.numeroSerie));
             }
+            if (criteria.getVueloId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getVueloId(), root -> root.join(Avion_.vuelos, JoinType.LEFT).get(Vuelo_.id))
+                    );
+            }
         }
         return specification;
     }

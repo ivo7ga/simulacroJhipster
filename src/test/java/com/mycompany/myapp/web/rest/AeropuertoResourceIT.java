@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.Aeropuerto;
+import com.mycompany.myapp.domain.Vuelo;
 import com.mycompany.myapp.repository.AeropuertoRepository;
 import com.mycompany.myapp.service.criteria.AeropuertoCriteria;
 import java.util.List;
@@ -353,6 +354,58 @@ class AeropuertoResourceIT {
 
         // Get all the aeropuertoList where ciudad does not contain UPDATED_CIUDAD
         defaultAeropuertoShouldBeFound("ciudad.doesNotContain=" + UPDATED_CIUDAD);
+    }
+
+    @Test
+    @Transactional
+    void getAllAeropuertosByVueloIsEqualToSomething() throws Exception {
+        // Initialize the database
+        aeropuertoRepository.saveAndFlush(aeropuerto);
+        Vuelo vuelo;
+        if (TestUtil.findAll(em, Vuelo.class).isEmpty()) {
+            vuelo = VueloResourceIT.createEntity(em);
+            em.persist(vuelo);
+            em.flush();
+        } else {
+            vuelo = TestUtil.findAll(em, Vuelo.class).get(0);
+        }
+        em.persist(vuelo);
+        em.flush();
+        aeropuerto.addVuelo(vuelo);
+        aeropuertoRepository.saveAndFlush(aeropuerto);
+        Long vueloId = vuelo.getId();
+
+        // Get all the aeropuertoList where vuelo equals to vueloId
+        defaultAeropuertoShouldBeFound("vueloId.equals=" + vueloId);
+
+        // Get all the aeropuertoList where vuelo equals to (vueloId + 1)
+        defaultAeropuertoShouldNotBeFound("vueloId.equals=" + (vueloId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllAeropuertosByVueloDestinoIsEqualToSomething() throws Exception {
+        // Initialize the database
+        aeropuertoRepository.saveAndFlush(aeropuerto);
+        Vuelo vueloDestino;
+        if (TestUtil.findAll(em, Vuelo.class).isEmpty()) {
+            vueloDestino = VueloResourceIT.createEntity(em);
+            em.persist(vueloDestino);
+            em.flush();
+        } else {
+            vueloDestino = TestUtil.findAll(em, Vuelo.class).get(0);
+        }
+        em.persist(vueloDestino);
+        em.flush();
+        aeropuerto.addVueloDestino(vueloDestino);
+        aeropuertoRepository.saveAndFlush(aeropuerto);
+        Long vueloDestinoId = vueloDestino.getId();
+
+        // Get all the aeropuertoList where vueloDestino equals to vueloDestinoId
+        defaultAeropuertoShouldBeFound("vueloDestinoId.equals=" + vueloDestinoId);
+
+        // Get all the aeropuertoList where vueloDestino equals to (vueloDestinoId + 1)
+        defaultAeropuertoShouldNotBeFound("vueloDestinoId.equals=" + (vueloDestinoId + 1));
     }
 
     /**

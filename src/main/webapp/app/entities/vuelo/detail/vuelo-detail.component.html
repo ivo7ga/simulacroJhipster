@@ -22,6 +22,37 @@
         <dd>
           <span>{{ vuelo.numeroDeVuelo }}</span>
         </dd>
+        <dt><span>Aeropuerto</span></dt>
+        <dd>
+          <div *ngIf="vuelo.aeropuerto">
+            <a [routerLink]="['/aeropuerto', vuelo.aeropuerto?.id, 'view']">{{ vuelo.aeropuerto?.ciudad }}</a>
+          </div>
+        </dd>
+        <dt><span>Destino Aeropuerto</span></dt>
+        <dd>
+          <div *ngIf="vuelo.destinoAeropuerto">
+            <a [routerLink]="['/aeropuerto', vuelo.destinoAeropuerto?.id, 'view']">{{ vuelo.destinoAeropuerto?.ciudad }}</a>
+          </div>
+        </dd>
+        <dt><span>Avion</span></dt>
+        <dd>
+          <div *ngIf="vuelo.avion">
+            <a [routerLink]="['/avion', vuelo.avion?.id, 'view']">{{ vuelo.avion?.tipo }}</a>
+          </div>
+        </dd>
+        <dt><span>Piloto</span></dt>
+        <dd>
+          <div *ngIf="vuelo.piloto">
+            <a [routerLink]="['/piloto', vuelo.piloto?.id, 'view']">{{ vuelo.piloto?.dni }}</a>
+          </div>
+        </dd>
+        <dt><span>Tripulante</span></dt>
+        <dd>
+          <span *ngFor="let tripulante of vuelo.tripulantes; let last = last">
+            <a [routerLink]="['/tripulante', tripulante?.id, 'view']">{{ tripulante.dni }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

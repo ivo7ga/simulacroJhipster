@@ -20,8 +20,34 @@
             <column name="numero_de_vuelo" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
+            <column name="aeropuerto_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="destino_aeropuerto_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="avion_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="piloto_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
+    </changeSet>
+
+    <changeSet id="20220308113845-1-relations" author="jhipster">
+
+        <createTable tableName="rel_vuelo__tripulante">
+            <column name="tripulante_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vuelo_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="vuelo_id, tripulante_id" tableName="rel_vuelo__tripulante"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->

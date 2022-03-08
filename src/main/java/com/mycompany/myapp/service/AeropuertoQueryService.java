@@ -91,6 +91,21 @@ public class AeropuertoQueryService extends QueryService<Aeropuerto> {
             if (criteria.getCiudad() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCiudad(), Aeropuerto_.ciudad));
             }
+            if (criteria.getVueloId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getVueloId(), root -> root.join(Aeropuerto_.vuelos, JoinType.LEFT).get(Vuelo_.id))
+                    );
+            }
+            if (criteria.getVueloDestinoId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getVueloDestinoId(),
+                            root -> root.join(Aeropuerto_.vueloDestinos, JoinType.LEFT).get(Vuelo_.id)
+                        )
+                    );
+            }
         }
         return specification;
     }

@@ -32,6 +32,16 @@ public class VueloCriteria implements Serializable, Criteria {
 
     private StringFilter numeroDeVuelo;
 
+    private LongFilter aeropuertoId;
+
+    private LongFilter destinoAeropuertoId;
+
+    private LongFilter avionId;
+
+    private LongFilter pilotoId;
+
+    private LongFilter tripulanteId;
+
     private Boolean distinct;
 
     public VueloCriteria() {}
@@ -40,6 +50,11 @@ public class VueloCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.pasaporteCovid = other.pasaporteCovid == null ? null : other.pasaporteCovid.copy();
         this.numeroDeVuelo = other.numeroDeVuelo == null ? null : other.numeroDeVuelo.copy();
+        this.aeropuertoId = other.aeropuertoId == null ? null : other.aeropuertoId.copy();
+        this.destinoAeropuertoId = other.destinoAeropuertoId == null ? null : other.destinoAeropuertoId.copy();
+        this.avionId = other.avionId == null ? null : other.avionId.copy();
+        this.pilotoId = other.pilotoId == null ? null : other.pilotoId.copy();
+        this.tripulanteId = other.tripulanteId == null ? null : other.tripulanteId.copy();
         this.distinct = other.distinct;
     }
 
@@ -93,6 +108,81 @@ public class VueloCriteria implements Serializable, Criteria {
         this.numeroDeVuelo = numeroDeVuelo;
     }
 
+    public LongFilter getAeropuertoId() {
+        return aeropuertoId;
+    }
+
+    public LongFilter aeropuertoId() {
+        if (aeropuertoId == null) {
+            aeropuertoId = new LongFilter();
+        }
+        return aeropuertoId;
+    }
+
+    public void setAeropuertoId(LongFilter aeropuertoId) {
+        this.aeropuertoId = aeropuertoId;
+    }
+
+    public LongFilter getDestinoAeropuertoId() {
+        return destinoAeropuertoId;
+    }
+
+    public LongFilter destinoAeropuertoId() {
+        if (destinoAeropuertoId == null) {
+            destinoAeropuertoId = new LongFilter();
+        }
+        return destinoAeropuertoId;
+    }
+
+    public void setDestinoAeropuertoId(LongFilter destinoAeropuertoId) {
+        this.destinoAeropuertoId = destinoAeropuertoId;
+    }
+
+    public LongFilter getAvionId() {
+        return avionId;
+    }
+
+    public LongFilter avionId() {
+        if (avionId == null) {
+            avionId = new LongFilter();
+        }
+        return avionId;
+    }
+
+    public void setAvionId(LongFilter avionId) {
+        this.avionId = avionId;
+    }
+
+    public LongFilter getPilotoId() {
+        return pilotoId;
+    }
+
+    public LongFilter pilotoId() {
+        if (pilotoId == null) {
+            pilotoId = new LongFilter();
+        }
+        return pilotoId;
+    }
+
+    public void setPilotoId(LongFilter pilotoId) {
+        this.pilotoId = pilotoId;
+    }
+
+    public LongFilter getTripulanteId() {
+        return tripulanteId;
+    }
+
+    public LongFilter tripulanteId() {
+        if (tripulanteId == null) {
+            tripulanteId = new LongFilter();
+        }
+        return tripulanteId;
+    }
+
+    public void setTripulanteId(LongFilter tripulanteId) {
+        this.tripulanteId = tripulanteId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -114,13 +204,28 @@ public class VueloCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(pasaporteCovid, that.pasaporteCovid) &&
             Objects.equals(numeroDeVuelo, that.numeroDeVuelo) &&
+            Objects.equals(aeropuertoId, that.aeropuertoId) &&
+            Objects.equals(destinoAeropuertoId, that.destinoAeropuertoId) &&
+            Objects.equals(avionId, that.avionId) &&
+            Objects.equals(pilotoId, that.pilotoId) &&
+            Objects.equals(tripulanteId, that.tripulanteId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, pasaporteCovid, numeroDeVuelo, distinct);
+        return Objects.hash(
+            id,
+            pasaporteCovid,
+            numeroDeVuelo,
+            aeropuertoId,
+            destinoAeropuertoId,
+            avionId,
+            pilotoId,
+            tripulanteId,
+            distinct
+        );
     }
 
     // prettier-ignore
@@ -130,6 +235,11 @@ public class VueloCriteria implements Serializable, Criteria {
             (id != null ? "id=" + id + ", " : "") +
             (pasaporteCovid != null ? "pasaporteCovid=" + pasaporteCovid + ", " : "") +
             (numeroDeVuelo != null ? "numeroDeVuelo=" + numeroDeVuelo + ", " : "") +
+            (aeropuertoId != null ? "aeropuertoId=" + aeropuertoId + ", " : "") +
+            (destinoAeropuertoId != null ? "destinoAeropuertoId=" + destinoAeropuertoId + ", " : "") +
+            (avionId != null ? "avionId=" + avionId + ", " : "") +
+            (pilotoId != null ? "pilotoId=" + pilotoId + ", " : "") +
+            (tripulanteId != null ? "tripulanteId=" + tripulanteId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

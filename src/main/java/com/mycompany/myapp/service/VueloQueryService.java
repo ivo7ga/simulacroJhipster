@@ -91,6 +91,45 @@ public class VueloQueryService extends QueryService<Vuelo> {
             if (criteria.getNumeroDeVuelo() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getNumeroDeVuelo(), Vuelo_.numeroDeVuelo));
             }
+            if (criteria.getAeropuertoId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getAeropuertoId(),
+                            root -> root.join(Vuelo_.aeropuerto, JoinType.LEFT).get(Aeropuerto_.id)
+                        )
+                    );
+            }
+            if (criteria.getDestinoAeropuertoId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getDestinoAeropuertoId(),
+                            root -> root.join(Vuelo_.destinoAeropuerto, JoinType.LEFT).get(Aeropuerto_.id)
+                        )
+                    );
+            }
+            if (criteria.getAvionId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getAvionId(), root -> root.join(Vuelo_.avion, JoinType.LEFT).get(Avion_.id))
+                    );
+            }
+            if (criteria.getPilotoId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getPilotoId(), root -> root.join(Vuelo_.piloto, JoinType.LEFT).get(Piloto_.id))
+                    );
+            }
+            if (criteria.getTripulanteId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getTripulanteId(),
+                            root -> root.join(Vuelo_.tripulantes, JoinType.LEFT).get(Tripulante_.id)
+                        )
+                    );
+            }
         }
         return specification;
     }
